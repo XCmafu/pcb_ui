@@ -1,0 +1,25 @@
+{
+  "param_infrared": {
+    "user_name": "admin",
+    "user_pwd": "admin",
+    "ip": "192.168.1.123",
+    "server_name": "IRCAM",
+    "channel": 0,
+    "width": 640,
+    "height": 512,
+    "active_get_temp": true
+  },
+  "param_video": {
+    "ip": "192.168.1.10",
+    "port": 34567,
+    "cols": 3840,
+    "rows": 2160
+  },
+  "param_db": {
+    "db_file_path": "../resource/test_database.db"
+  },
+  "param_sport_console": {
+    "host_ip": "192.168.0.200",
+    "console_ip": "192.168.0.1"
+  }
+}
