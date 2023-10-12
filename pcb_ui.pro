@@ -26,7 +26,8 @@ DEFINES += BOOST_ASIO_STANDALONE
 PATH_CPP_UTL = $$PWD/cpp_utility
 INCLUDEPATH += $$PATH_CPP_UTL
                $$PATH_CPP_UTL/3rdpaty
-LIBS += -L$$PATH_CPP_UTL/lib/ -lcpp_utl
+
+//LIBS += -L$$PATH_CPP_UTL/lib/ -lcpp_utl
 
 # cpp_utl/3rdparty
 PATH_CPP_UTL_3RDPARTY = $$PATH_CPP_UTL/3rdparty
@@ -37,14 +38,18 @@ PATH_OPENCV = $$PATH_CPP_UTL_3RDPARTY/opencv-3.4.1-win
 INCLUDEPATH += $$PATH_OPENCV/include
 INCLUDEPATH += $$PATH_OPENCV/include/opencv
 INCLUDEPATH += $$PATH_OPENCV/include/opencv2
-LIBS += -L$$PATH_OPENCV/x64/vc14/lib/ -lopencv_world341
+
+//LIBS += -L$$PATH_OPENCV/x64/vc14/lib/ -lopencv_world341
 
 SOURCES += \
     main.cpp \
-    main_window.cpp
+    main_window.cpp \
+    qdevicedebugpage.cpp
 
 HEADERS += \
-    main_window.h
+    WidgetBase.h \
+    main_window.h \
+    qdevicedebugpage.h
 
 FORMS += \
     main_window.ui

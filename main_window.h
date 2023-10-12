@@ -3,7 +3,10 @@
 
 #include <QMainWindow>
 #include <iostream>
-#include "opencv2/opencv.hpp"
+//#include "opencv2/opencv.hpp"
+
+#include <QTabWidget>
+#include <QPointer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,6 +26,16 @@ public:
 
 
 private:
-    Ui::MainWindow *ui;
+    //不太喜欢用Ui 设计器
+    //Ui::MainWindow *ui;
+
+public:
+    //初始化控件
+    void initWidget();
+    //初始化信号槽
+    void initSignals();
+
+protected:
+    QPointer<QTabWidget> m_mainWidget;
 };
 #endif // MAINWINDOW_H

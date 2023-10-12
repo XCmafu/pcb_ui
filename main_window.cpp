@@ -3,14 +3,16 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    //, ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+    //ui->setupUi(this);
+    initWidget();
+    initSignals();
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+    //delete ui;
 }
 
 
@@ -18,7 +20,7 @@ bool MainWindow::init()
 {
     std::cout << "aa" << std::endl;
     // 读取PNG图像
-    cv::Mat image = cv::imread("1.png", cv::IMREAD_COLOR);
+    //cv::Mat image = cv::imread("1.png", cv::IMREAD_COLOR);
 
 //    if (image.empty()) {
 //        std::cerr << "无法加载图像" << std::endl;
@@ -26,10 +28,20 @@ bool MainWindow::init()
 //    }
 
     // 显示图像
-    cv::namedWindow("Loaded Image", cv::WINDOW_NORMAL);
-    cv::imshow("Loaded Image", image);
-    cv::waitKey(50);
+    //cv::namedWindow("Loaded Image", cv::WINDOW_NORMAL);
+    //cv::imshow("Loaded Image", image);
+    //cv::waitKey(50);
 
     return true;
+}
+
+void MainWindow::initWidget()
+{
+    this->setFixedSize(1600,800);
+}
+
+void MainWindow::initSignals()
+{
+
 }
 
