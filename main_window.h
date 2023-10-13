@@ -8,6 +8,12 @@
 #include <QTabWidget>
 #include <QPointer>
 
+#include "qmainpage.h"
+#include "qdevicedebugpage.h"
+#include "qdbmanagepage.h"
+#include "qtempaturemonitorpage.h"
+#include "qdetectionpage.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -37,5 +43,10 @@ public:
 
 protected:
     QPointer<QTabWidget> m_mainWidget;
+    QPointer<QMainPage> m_mainPage;                             //首页页面
+    QPointer<QDeviceDebugPage> m_deviceDebugPage;               //设备调试页面
+    QPointer<QDbManagePage> m_managePage;                       //数据库管理页面
+    QPointer<QTempatureMonitorPage> m_tempatureMonitorPage;     //温度监测页面
+    QPointer<QDetectionPage> m_detectionPage;                   //监测结果页面
 };
 #endif // MAINWINDOW_H

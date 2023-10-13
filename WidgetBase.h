@@ -4,7 +4,7 @@
 #include <QWidget>
 
 template<class T>
-class WidgetBase : public QWidget
+class WidgetBase : public T
 {
 public:
     //初始化函数

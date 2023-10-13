@@ -44,12 +44,20 @@ INCLUDEPATH += $$PATH_OPENCV/include/opencv2
 SOURCES += \
     main.cpp \
     main_window.cpp \
-    qdevicedebugpage.cpp
+    qdbmanagepage.cpp \
+    qdetectionpage.cpp \
+    qdevicedebugpage.cpp \
+    qmainpage.cpp \
+    qtempaturemonitorpage.cpp
 
 HEADERS += \
-    WidgetBase.h \
     main_window.h \
-    qdevicedebugpage.h
+    qdbmanagepage.h \
+    qdetectionpage.h \
+    qdevicedebugpage.h \
+    qmainpage.h \
+    qtempaturemonitorpage.h \
+    widgetbase.h
 
 FORMS += \
     main_window.ui
