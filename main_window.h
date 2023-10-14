@@ -40,13 +40,17 @@ public:
     void initWidget();
     //初始化信号槽
     void initSignals();
+protected:
+    //void initMainPageSignals();
+    //void initDeviceDebugPageSignals();
 
 protected:
-    QPointer<QTabWidget> m_mainWidget;
+    QPointer<QTabWidget> m_tabWidget;                           //tabWidget
     QPointer<QMainPage> m_mainPage;                             //首页页面
     QPointer<QDeviceDebugPage> m_deviceDebugPage;               //设备调试页面
-    QPointer<QDbManagePage> m_managePage;                       //数据库管理页面
+    QPointer<QDbManagePage> m_dbmanagePage;                       //数据库管理页面
     QPointer<QTempatureMonitorPage> m_tempatureMonitorPage;     //温度监测页面
     QPointer<QDetectionPage> m_detectionPage;                   //监测结果页面
 };
+
 #endif // MAINWINDOW_H

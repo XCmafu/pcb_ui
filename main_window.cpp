@@ -38,6 +38,30 @@ bool MainWindow::init()
 void MainWindow::initWidget()
 {
     this->setFixedSize(1600,800);
+
+    QWidget* mainWidget = new QWidget();
+    this->setCentralWidget(mainWidget);
+
+    QHBoxLayout* mainLayout = new QHBoxLayout(mainWidget);
+
+    m_tabWidget = new QTabWidget();
+    mainLayout->addWidget(m_tabWidget);
+
+    //5个页面
+    m_mainPage = new QMainPage();
+    m_tabWidget->addTab(m_mainPage,u8"首页");
+
+    m_deviceDebugPage = new QDeviceDebugPage();
+    m_tabWidget->addTab(m_deviceDebugPage,u8"设备调试");
+
+    m_dbmanagePage = new QDbManagePage();
+    m_tabWidget->addTab(m_dbmanagePage,u8"数据库管理");
+
+    m_tempatureMonitorPage = new QTempatureMonitorPage();
+    m_tabWidget->addTab(m_tempatureMonitorPage,u8"温度监测");
+
+    m_detectionPage = new QDetectionPage();
+    m_tabWidget->addTab(m_detectionPage,u8"检测结果");
 }
 
 void MainWindow::initSignals()
