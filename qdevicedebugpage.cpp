@@ -59,9 +59,17 @@ void QMovementPlatformWidget::init()
 
 }
 
+void QMovementPlatformWidget::initSignalsBy(QDeviceDebugPage *deviceDebugPage)
+{
+    bool ret= true;
+    ret = connect(this->m_pushbtnTop,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnTopClicked);
+
+}
+
 QInfraredCameraControlWidget::QInfraredCameraControlWidget()
 {
     init();
+    initPseudoColorComboBox();
 }
 
 void QInfraredCameraControlWidget::init()
@@ -70,13 +78,19 @@ void QInfraredCameraControlWidget::init()
 
     {
         QHBoxLayout* hbox = new QHBoxLayout();
-        vbox->addLayout(hbox);
+        vbox->addLayout(hbox,1);
 
         QVBoxLayout* vv=new QVBoxLayout();
-        hbox->addLayout(vv);
+        hbox->addLayout(vv,1);
         {
             QHBoxLayout* hh = new QHBoxLayout();
             vv->addLayout(hh);
+
+            m_labelPseudocolor = new QLabel(u8"伪彩颜色");
+            hh->addWidget(m_labelPseudocolor);
+
+            m_comboBoxPseudocolor = new QComboBox();
+            hh->addWidget(m_comboBoxPseudocolor);
 
             m_groupBoxLens = new QGroupBox(u8"镜头");
             vv->addWidget(m_groupBoxLens);
@@ -88,7 +102,7 @@ void QInfraredCameraControlWidget::init()
                     m_labelFocus = new QLabel(u8"聚焦");
                     hhh->addWidget(m_labelFocus);
 
-                    vvv->addStretch();
+                    hhh->addStretch();
 
                     m_pushbtnFocusIn = new QPushButton(u8"+");
                     hhh->addWidget(m_pushbtnFocusIn);
@@ -103,7 +117,7 @@ void QInfraredCameraControlWidget::init()
         }
 
         m_groupBoxDelTemperatureZone = new QGroupBox(u8"删除温区");
-        hbox->addWidget(m_groupBoxDelTemperatureZone);
+        hbox->addWidget(m_groupBoxDelTemperatureZone,1);
         {
             QVBoxLayout* vv = new QVBoxLayout(m_groupBoxDelTemperatureZone);
             {
@@ -124,10 +138,10 @@ void QInfraredCameraControlWidget::init()
 
     {
         QHBoxLayout* hbox = new QHBoxLayout();
-        vbox->addLayout(hbox);
+        vbox->addLayout(hbox,1);
 
         m_groupBoxSetTemperatureZone = new QGroupBox(u8"设置温区");
-        hbox->addWidget(m_groupBoxSetTemperatureZone);
+        hbox->addWidget(m_groupBoxSetTemperatureZone,1);
         {
             QVBoxLayout* vv = new QVBoxLayout(m_groupBoxSetTemperatureZone);
             {
@@ -169,7 +183,7 @@ void QInfraredCameraControlWidget::init()
         }
 
         m_groupBoxReadTemperatureZone = new QGroupBox(u8"读取温区");
-        hbox->addWidget(m_groupBoxReadTemperatureZone);
+        hbox->addWidget(m_groupBoxReadTemperatureZone,1);
         {
             QVBoxLayout* vv = new QVBoxLayout(m_groupBoxReadTemperatureZone);
             {
@@ -220,6 +234,37 @@ void QInfraredCameraControlWidget::init()
     }
 }
 
+void QInfraredCameraControlWidget::initPseudoColorComboBox()
+{
+    m_comboBoxPseudocolor->addItem(u8"白热");
+    m_comboBoxPseudocolor->addItem(u8"黑热");
+    m_comboBoxPseudocolor->addItem(u8"彩虹");
+    m_comboBoxPseudocolor->addItem(u8"彩虹HC");
+    m_comboBoxPseudocolor->addItem(u8"铁红");
+    m_comboBoxPseudocolor->addItem(u8"熔岩");
+    m_comboBoxPseudocolor->addItem(u8"天空");
+    m_comboBoxPseudocolor->addItem(u8"中灰");
+    m_comboBoxPseudocolor->addItem(u8"灰红");
+    m_comboBoxPseudocolor->addItem(u8"紫橙");
+    m_comboBoxPseudocolor->addItem(u8"特殊");
+
+    m_comboBoxPseudocolor->setCurrentIndex(2);  //默认是彩虹
+}
+
+void QInfraredCameraControlWidget::initSignalsBy(QDeviceDebugPage *deviceDebugPage)
+{
+    bool ret = true;
+    ret = connect(this->m_pushbtnFocusIn,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnInfraredFoucsInClicked);
+    ret = connect(this->m_pushbtnFocusOut,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnInfraredFoucsOutClicked);
+    ret = connect(this->m_pushbtnAutoFocus,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnInfraredAutoFoucsClicked);
+
+    ret =connect(this->m_pushbtnDelZone,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnDelTemparetureZoneClicked);
+    ret =connect(this->m_pushbtnDelAllZone,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnDelAllTemparetureZoneClicked);
+
+    ret =connect(this->m_pushbtnSetting,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnSetTemparetureZoneClicked);
+    ret =connect(this->m_pushbtnRead,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnReadTemparetureZoneClicked);
+}
+
 QVisibleCameraControlWidget::QVisibleCameraControlWidget()
 {
     init();
@@ -229,15 +274,15 @@ void QVisibleCameraControlWidget::init()
 {
     QGridLayout* grid = new QGridLayout(this);
 
-    m_LabelExposureTime = new QLabel(u8"曝光时间");
-    grid->addWidget(m_LabelExposureTime,0,0);
+    m_labelExposureTime = new QLabel(u8"曝光时间");
+    grid->addWidget(m_labelExposureTime,0,0);
 
     m_spinBoxExposure = new QSpinBox();
     grid->addWidget(m_spinBoxExposure,0,1);
 
     m_sliderExposure = new QSlider();
     m_sliderExposure->setOrientation(Qt::Horizontal);
-    grid->addWidget(m_sliderExposure,0,2);
+    grid->addWidget(m_sliderExposure,0,2,1,1);
 
     m_labelZoom = new QLabel(u8"变倍");
     grid->addWidget(m_labelZoom,1,0);
@@ -259,6 +304,16 @@ void QVisibleCameraControlWidget::init()
 
     m_pushbtnReset = new QPushButton(u8"重置");
     grid->addWidget(m_pushbtnReset,3,0,1,3);
+}
+
+void QVisibleCameraControlWidget::initSignalsBy(QDeviceDebugPage *deviceDebugPage)
+{
+    bool ret =true;
+    ret = connect(m_pushbtnZoomIn,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnVisibleZoomInClicked);
+    ret = connect(m_pushbtnZoomOut,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnVisibleZoomOutClicked);
+    ret = connect(m_pushbtnFocusIn,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnVisibleFocusInClicked);
+    ret = connect(m_pushbtnFocusOut,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnVisibleFocusOutClicked);
+    ret = connect(m_pushbtnReset,&QPushButton::clicked,deviceDebugPage,&QDeviceDebugPage::slot_pushbtnVisibleResetClicked);
 }
 
 QPlayImageWidget::QPlayImageWidget()
@@ -290,12 +345,6 @@ void QPlayImageWidget::init()
 
 }
 
-QPointer<QDoubleClickebleLabel> QPlayImageWidget::labelImage()
-{
-    return m_labelImage;
-}
-
-
 QDeviceDebugPage::QDeviceDebugPage()
 {
 }
@@ -310,17 +359,17 @@ void QDeviceDebugPage::initWidget()
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
     QHBoxLayout* hbox = new QHBoxLayout(this);
-    mainLayout->addLayout(hbox);
+    mainLayout->addLayout(hbox,1);
     {
         m_groupBoxInfraredImage = new QGroupBox(u8"红外图像");
-        hbox->addWidget(m_groupBoxInfraredImage);
+        hbox->addWidget(m_groupBoxInfraredImage,2);
         {
             QHBoxLayout* h = new QHBoxLayout(m_groupBoxInfraredImage);
             m_playImageWidgetInfrared = new QPlayImageWidget();
             h->addWidget(m_playImageWidgetInfrared);
         }
         m_groupBoxMovementPlatform = new QGroupBox(u8"运动平台");
-        hbox->addWidget(m_groupBoxMovementPlatform);
+        hbox->addWidget(m_groupBoxMovementPlatform,1);
         {
             QHBoxLayout* h = new QHBoxLayout(m_groupBoxMovementPlatform);
             m_movementPlatformWidget = new QMovementPlatformWidget();
@@ -328,7 +377,7 @@ void QDeviceDebugPage::initWidget()
         }
 
         m_groupBoxVisibleImage = new QGroupBox(u8"可见光图");
-        hbox->addWidget(m_groupBoxVisibleImage);
+        hbox->addWidget(m_groupBoxVisibleImage,2);
         {
             QHBoxLayout* h = new QHBoxLayout(m_groupBoxVisibleImage);
             m_playImageWidgetVisible = new QPlayImageWidget();
@@ -337,17 +386,17 @@ void QDeviceDebugPage::initWidget()
     }
 
     QHBoxLayout* hbox1 = new QHBoxLayout(this);
-    mainLayout->addLayout(hbox1);
+    mainLayout->addLayout(hbox1,2);
     {
         m_groupBoxInfraredCameraControl = new QGroupBox(u8"红外相机控制");
-        hbox1->addWidget(m_groupBoxInfraredCameraControl);
+        hbox1->addWidget(m_groupBoxInfraredCameraControl,1);
         {
             QHBoxLayout* h = new QHBoxLayout(m_groupBoxInfraredCameraControl);
             m_infraredCameraControlWidget = new QInfraredCameraControlWidget();
             h->addWidget(m_infraredCameraControlWidget);
         }
         m_groupBoxvisibleCameraControl = new QGroupBox(u8"可见光相机控制");
-        hbox1->addWidget(m_groupBoxvisibleCameraControl);
+        hbox1->addWidget(m_groupBoxvisibleCameraControl,1);
         {
             QHBoxLayout* h = new QHBoxLayout(m_groupBoxvisibleCameraControl);
             m_visibleCameraControlWidget = new QVisibleCameraControlWidget();
@@ -359,18 +408,22 @@ void QDeviceDebugPage::initWidget()
 void QDeviceDebugPage::initSignals()
 {
     bool ret =true;
+    //红外图像
+    ret = connect(m_playImageWidgetInfrared->m_labelImage,&QDoubleClickebleLabel::sig_labelDoubleClicked,this,&QDeviceDebugPage::slot_infraredLabelDoubleClicked);
+    ret = connect(m_playImageWidgetInfrared->m_pushbtnPlay,&QPushButton::clicked,this,&QDeviceDebugPage::slot_pushbtnInfraredPlayClicked);
+    ret = connect(m_playImageWidgetInfrared->m_pushbtnCutSave,&QPushButton::clicked,this,&QDeviceDebugPage::slot_pushbtnInfraredCutClicked);
+    //可见光图
+    ret = connect(m_playImageWidgetVisible->m_labelImage,&QDoubleClickebleLabel::sig_labelDoubleClicked,this,&QDeviceDebugPage::slot_visibleLabelDoubleClicked);
+    ret = connect(m_playImageWidgetVisible->m_pushbtnPlay,&QPushButton::clicked,this,&QDeviceDebugPage::slot_pushbtnVisiblePlayClicked);
+    ret = connect(m_playImageWidgetVisible->m_pushbtnCutSave,&QPushButton::clicked,this,&QDeviceDebugPage::slot_pushbtnVisibleCutClicked);
 
-    ret = connect(m_playImageWidgetInfrared->labelImage(),&QDoubleClickebleLabel::sig_labelDoubleClicked,this,&QDeviceDebugPage::slot_infraredLabelDoubleClicked);
-    ret = connect(m_playImageWidgetVisible->labelImage(),&QDoubleClickebleLabel::sig_labelDoubleClicked,this,&QDeviceDebugPage::slot_visibleLabelDoubleClicked);
-
-
-
+    //运动平台
+    m_movementPlatformWidget->initSignalsBy(this);
+    //红外相机控制
+    m_infraredCameraControlWidget->initSignalsBy(this);
+    //可见光相机控制
 }
 
-void QDeviceDebugPage::slot_something()
-{
-
-}
 
 void QDeviceDebugPage::slot_infraredLabelDoubleClicked()
 {
@@ -382,11 +435,114 @@ void QDeviceDebugPage::slot_infraredLabelDoubleClicked()
     GlobalUtils::showImageViewer(image,this);
 }
 
+void QDeviceDebugPage::slot_pushbtnInfraredPlayClicked()
+{
+    //1.开启播放线程
+
+
+}
+
+void QDeviceDebugPage::slot_pushbtnInfraredCutClicked()
+{
+
+}
+
+
 void QDeviceDebugPage::slot_visibleLabelDoubleClicked()
 {
     //1.获取图像数据
     QImage image;
     //2.显示
     GlobalUtils::showImageViewer(image);
+}
+
+void QDeviceDebugPage::slot_pushbtnVisiblePlayClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnVisibleCutClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnTopClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnLeftClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnRightClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnBottomClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnInfraredFoucsInClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnInfraredFoucsOutClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnInfraredAutoFoucsClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnDelTemparetureZoneClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnDelAllTemparetureZoneClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnSetTemparetureZoneClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnReadTemparetureZoneClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnVisibleZoomInClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnVisibleZoomOutClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnVisibleFocusInClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnVisibleFocusOutClicked()
+{
+
+}
+
+void QDeviceDebugPage::slot_pushbtnVisibleResetClicked()
+{
+
 }
 

@@ -16,12 +16,15 @@
 
 #include "globalui.h"
 
+class QDeviceDebugPage;
 //运动平台
 class QMovementPlatformWidget : public QWidget
 {
+    Q_OBJECT
 public:
     QMovementPlatformWidget();
     void init();
+    void initSignalsBy(QDeviceDebugPage *deviceDebugPage);
 protected:
     QPointer<QPushButton> m_pushbtnTop;
     QPointer<QPushButton> m_pushbtnLeft;
@@ -43,9 +46,13 @@ protected:
 //红外相机控制
 class QInfraredCameraControlWidget : public QWidget
 {
+    Q_OBJECT
 public:
     QInfraredCameraControlWidget();
     void init();
+    void initPseudoColorComboBox();
+
+    void initSignalsBy(QDeviceDebugPage* deviceDebugPage);
 protected:
     QPointer<QLabel>        m_labelPseudocolor;             //伪彩颜色
     QPointer<QComboBox>     m_comboBoxPseudocolor;
@@ -91,11 +98,13 @@ protected:
 //可见光相机控制
 class QVisibleCameraControlWidget : public QWidget
 {
+    Q_OBJECT
 public:
     QVisibleCameraControlWidget();
     void init();
+    void initSignalsBy(QDeviceDebugPage* deviceDebugPage);
 protected:
-    QPointer<QLabel> m_LabelExposureTime;       //曝光时间
+    QPointer<QLabel> m_labelExposureTime;       //曝光时间
     QPointer<QSpinBox> m_spinBoxExposure;
     QPointer<QSlider> m_sliderExposure;
     QPointer<QLabel> m_labelZoom;               //变倍
@@ -111,12 +120,12 @@ protected:
 //播放图像控件
 class QPlayImageWidget : public QWidget
 {
+    Q_OBJECT
 public:
     QPlayImageWidget();
     void init();
 
-    QPointer<QDoubleClickebleLabel>  labelImage();
-protected:
+public:
     QPointer<QDoubleClickebleLabel> m_labelImage;              //播放图像label
     QPointer<QPushButton> m_pushbtnPlay;        //播放按钮
     QPointer<QPushButton> m_pushbtnCutSave;     //截图保存图像
@@ -137,10 +146,40 @@ public:
 
 public slots:
     //槽函数
-    void slot_something();
+    //红外图像
     void slot_infraredLabelDoubleClicked();                                 //红外图像被点击
-    void slot_visibleLabelDoubleClicked();                                  //可见光图被点击
+    void slot_pushbtnInfraredPlayClicked();                                 //红外图像播放
+    void slot_pushbtnInfraredCutClicked();                                  //红外图像截图
 
+    //可见光图
+    void slot_visibleLabelDoubleClicked();                                  //可见光图被点击
+    void slot_pushbtnVisiblePlayClicked();                                  //可见光图播放
+    void slot_pushbtnVisibleCutClicked();                                   //可见光图截图
+
+    //运动平台
+    void slot_pushbtnTopClicked();                                          //上
+    void slot_pushbtnLeftClicked();                                         //左
+    void slot_pushbtnRightClicked();                                        //右
+    void slot_pushbtnBottomClicked();                                       //下
+    //红外相机控制
+    //镜头
+    void slot_pushbtnInfraredFoucsInClicked();                              //聚焦+
+    void slot_pushbtnInfraredFoucsOutClicked();                             //聚焦-
+    void slot_pushbtnInfraredAutoFoucsClicked();                            //自动聚焦
+    //删除温区
+    void slot_pushbtnDelTemparetureZoneClicked();                           //删除温区
+    void slot_pushbtnDelAllTemparetureZoneClicked();                        //删除所有温区
+    //设置温区
+    void slot_pushbtnSetTemparetureZoneClicked();                           //设置温区
+    //读取温区
+    void slot_pushbtnReadTemparetureZoneClicked();                          //读取温区
+
+    //可见光相机控制
+    void slot_pushbtnVisibleZoomInClicked();                                //聚焦+
+    void slot_pushbtnVisibleZoomOutClicked();                               //聚焦-
+    void slot_pushbtnVisibleFocusInClicked();                               //聚焦+
+    void slot_pushbtnVisibleFocusOutClicked();                              //聚焦-
+    void slot_pushbtnVisibleResetClicked();                                 //重置
 protected:
     QPointer<QGroupBox> m_groupBoxInfraredImage;                            //红外图像
     QPointer<QGroupBox> m_groupBoxVisibleImage;                             //可见光图
