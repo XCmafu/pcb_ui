@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1515</width>
+    <height>950</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1515</width>
+    <height>950</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1515</width>
+    <height>950</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow::separator {
+    background-color: #31363b;
+    color: white;
+    padding-left: 4px;
+    spacing: 2px;
+    border: 1px dashed #76797C;
+}
+
+QMainWindow::separator:hover {
+    background-color: #787876;
+    color: white;
+    padding-left: 4px;
+    border: 1px solid #76797C;
+    spacing: 2px;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="bt_detect">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>10</y>
+      <width>75</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>检测</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bt_device">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>10</y>
+      <width>75</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>设备调试</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bt_db">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>10</y>
+      <width>75</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>数据库</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bt_result">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>10</y>
+      <width>75</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>检测结果</string>
+    </property>
+   </widget>
+   <widget class="QStackedWidget" name="stacked_widget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>90</y>
+      <width>1500</width>
+      <height>820</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1500</width>
+      <height>820</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1500</width>
+      <height>820</height>
+     </size>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="WidgetDetect" name="page"/>
+    <widget class="WidgetResult" name="page_2"/>
+    <widget class="WidgetDevice" name="page_3"/>
+    <widget class="WidgetDB" name="page_4"/>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1515</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WidgetDevice</class>
+   <extends>QWidget</extends>
+   <header location="global">widget_device.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WidgetDB</class>
+   <extends>QWidget</extends>
+   <header location="global">widget_db.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WidgetDetect</class>
+   <extends>QWidget</extends>
+   <header location="global">widget_detect.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WidgetResult</class>
+   <extends>QWidget</extends>
+   <header location="global">widget_result.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
