@@ -1,4 +1,5 @@
 ﻿#include "qdevicedebugpage.h"
+#include "globalutils.h"
 
 QMovementPlatformWidget::QMovementPlatformWidget()
 {
@@ -77,6 +78,28 @@ void QInfraredCameraControlWidget::init()
             QHBoxLayout* hh = new QHBoxLayout();
             vv->addLayout(hh);
 
+            m_groupBoxLens = new QGroupBox(u8"镜头");
+            vv->addWidget(m_groupBoxLens);
+            {
+                QVBoxLayout* vvv = new QVBoxLayout(m_groupBoxLens);
+                {
+                    QHBoxLayout* hhh = new QHBoxLayout();
+                    vvv->addLayout(hhh);
+                    m_labelFocus = new QLabel(u8"聚焦");
+                    hhh->addWidget(m_labelFocus);
+
+                    vvv->addStretch();
+
+                    m_pushbtnFocusIn = new QPushButton(u8"+");
+                    hhh->addWidget(m_pushbtnFocusIn);
+
+                    m_pushbtnFocusOut = new QPushButton(u8"-");
+                    hhh->addWidget(m_pushbtnFocusOut);
+                }
+                m_pushbtnAutoFocus = new QPushButton(u8"自动聚焦");
+                vvv->addWidget(m_pushbtnAutoFocus);
+            }
+
         }
 
         m_groupBoxDelTemperatureZone = new QGroupBox(u8"删除温区");
@@ -149,7 +172,50 @@ void QInfraredCameraControlWidget::init()
         hbox->addWidget(m_groupBoxReadTemperatureZone);
         {
             QVBoxLayout* vv = new QVBoxLayout(m_groupBoxReadTemperatureZone);
+            {
+                QHBoxLayout* hh= new QHBoxLayout();
+                vv->addLayout(hh);
+                m_labelReadTemperatureZone =new QLabel(u8"温区");
+                hh->addWidget(m_labelReadTemperatureZone);
 
+                m_spinBoxReadTemperatureZone = new QSpinBox();
+                hh->addWidget(m_spinBoxReadTemperatureZone);
+
+                m_pushbtnRead = new QPushButton();
+                hh->addWidget(m_pushbtnRead);
+
+            }
+            {
+                QHBoxLayout* hh= new QHBoxLayout();
+                vv->addLayout(hh);
+
+                m_labelMaxTemperature =new QLabel(u8"最高温");
+                hh->addWidget(m_labelMaxTemperature);
+
+                m_labelMaxTemperatureValue =new QLabel(u8"***");
+                hh->addWidget(m_labelMaxTemperatureValue);
+
+                m_labelMinTemperature =new QLabel(u8"最低温");
+                hh->addWidget(m_labelMinTemperature);
+
+                m_labelMinTemperatureValue =new QLabel(u8"***");
+                hh->addWidget(m_labelMinTemperatureValue);
+            }
+            {
+                QHBoxLayout* hh= new QHBoxLayout();
+                vv->addLayout(hh);
+                m_labelAverageTemperature =new QLabel(u8"平均温");
+                hh->addWidget(m_labelAverageTemperature);
+
+                m_labelAverageTemperatureValue =new QLabel(u8"***");
+                hh->addWidget(m_labelAverageTemperatureValue);
+
+                m_labelCenterTemperature =new QLabel(u8"中心温");
+                hh->addWidget(m_labelCenterTemperature);
+
+                m_labelCenterTemperatureValue =new QLabel(u8"***");
+                hh->addWidget(m_labelCenterTemperatureValue);
+            }
         }
     }
 }
@@ -204,7 +270,9 @@ void QPlayImageWidget::init()
 {
     QVBoxLayout* vbox = new QVBoxLayout(this);
 
-    m_labelImage = new QLabel(u8"图像");
+    m_labelImage = new QDoubleClickebleLabel();
+    m_labelImage->setText(u8"图像");
+
     vbox->addWidget(m_labelImage);
 
     {
@@ -216,17 +284,20 @@ void QPlayImageWidget::init()
 
         hbox->addStretch(1);
 
-        m_pushbtnSave = new QPushButton(u8"save");
-        hbox->addWidget(m_pushbtnSave);
+        m_pushbtnCutSave = new QPushButton(u8"cutSave");
+        hbox->addWidget(m_pushbtnCutSave);
     }
 
+}
+
+QPointer<QDoubleClickebleLabel> QPlayImageWidget::labelImage()
+{
+    return m_labelImage;
 }
 
 
 QDeviceDebugPage::QDeviceDebugPage()
 {
-    initWidget();
-    initSignals();
 }
 
 void QDeviceDebugPage::init()
@@ -287,11 +358,35 @@ void QDeviceDebugPage::initWidget()
 
 void QDeviceDebugPage::initSignals()
 {
+    bool ret =true;
+
+    ret = connect(m_playImageWidgetInfrared->labelImage(),&QDoubleClickebleLabel::sig_labelDoubleClicked,this,&QDeviceDebugPage::slot_infraredLabelDoubleClicked);
+    ret = connect(m_playImageWidgetVisible->labelImage(),&QDoubleClickebleLabel::sig_labelDoubleClicked,this,&QDeviceDebugPage::slot_visibleLabelDoubleClicked);
+
+
 
 }
 
 void QDeviceDebugPage::slot_something()
 {
 
+}
+
+void QDeviceDebugPage::slot_infraredLabelDoubleClicked()
+{
+    //1.获取图像数据
+    QImage image;
+    image = GlobalUtils::cvmat2image();
+    image = QImage(":/image/sample.jpg");
+    //2.显示
+    GlobalUtils::showImageViewer(image,this);
+}
+
+void QDeviceDebugPage::slot_visibleLabelDoubleClicked()
+{
+    //1.获取图像数据
+    QImage image;
+    //2.显示
+    GlobalUtils::showImageViewer(image);
 }
 

@@ -55,4 +55,7 @@
     <qresource prefix="/style">
         <file>style_app.css</file>
     </qresource>
+    <qresource prefix="/image">
+        <file>sample.jpg</file>
+    </qresource>
 </RCC>

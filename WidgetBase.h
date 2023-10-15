@@ -7,6 +7,9 @@ template<class T>
 class WidgetBase : public T
 {
 public:
+    WidgetBase(QWidget* parent = nullptr)
+        :T(parent)
+    {}
     //初始化函数
     virtual void init(){}
     //初始化控件

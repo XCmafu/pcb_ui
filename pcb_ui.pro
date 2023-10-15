@@ -42,19 +42,25 @@ INCLUDEPATH += $$PATH_OPENCV/include/opencv2
 //LIBS += -L$$PATH_OPENCV/x64/vc14/lib/ -lopencv_world341
 
 SOURCES += \
+    globalui.cpp \
+    globalutils.cpp \
     main.cpp \
     main_window.cpp \
     qdbmanagepage.cpp \
     qdetectionpage.cpp \
     qdevicedebugpage.cpp \
+    qimageviewer.cpp \
     qmainpage.cpp \
     qtempaturemonitorpage.cpp
 
 HEADERS += \
+    globalui.h \
+    globalutils.h \
     main_window.h \
     qdbmanagepage.h \
     qdetectionpage.h \
     qdevicedebugpage.h \
+    qimageviewer.h \
     qmainpage.h \
     qtempaturemonitorpage.h \
     widgetbase.h

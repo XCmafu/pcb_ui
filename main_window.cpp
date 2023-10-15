@@ -6,8 +6,6 @@ MainWindow::MainWindow(QWidget *parent)
     //, ui(new Ui::MainWindow)
 {
     //ui->setupUi(this);
-    initWidget();
-    initSignals();
 }
 
 MainWindow::~MainWindow()
@@ -19,6 +17,8 @@ MainWindow::~MainWindow()
 bool MainWindow::init()
 {
     std::cout << "aa" << std::endl;
+    initWidget();
+    initSignals();
     // 读取PNG图像
     //cv::Mat image = cv::imread("1.png", cv::IMREAD_COLOR);
 
@@ -37,7 +37,8 @@ bool MainWindow::init()
 
 void MainWindow::initWidget()
 {
-    this->setFixedSize(1600,800);
+    this->setFixedSize(1500,900);
+    this->setWindowTitle(u8"电路板缺陷检测系统");
 
     QWidget* mainWidget = new QWidget();
     this->setCentralWidget(mainWidget);
@@ -53,19 +54,27 @@ void MainWindow::initWidget()
 
     m_deviceDebugPage = new QDeviceDebugPage();
     m_tabWidget->addTab(m_deviceDebugPage,u8"设备调试");
+    m_deviceDebugPage->initWidget();
 
     m_dbmanagePage = new QDbManagePage();
     m_tabWidget->addTab(m_dbmanagePage,u8"数据库管理");
+    m_dbmanagePage->initWidget();
 
     m_tempatureMonitorPage = new QTempatureMonitorPage();
     m_tabWidget->addTab(m_tempatureMonitorPage,u8"温度监测");
+    m_tempatureMonitorPage->initWidget();
 
     m_detectionPage = new QDetectionPage();
     m_tabWidget->addTab(m_detectionPage,u8"检测结果");
+    m_detectionPage->initWidget();
 }
 
 void MainWindow::initSignals()
 {
-
+    m_mainPage->initSignals();
+    m_deviceDebugPage->initSignals();
+    m_dbmanagePage->initSignals();
+    m_tempatureMonitorPage->initSignals();
+    m_detectionPage->initSignals();
 }
 

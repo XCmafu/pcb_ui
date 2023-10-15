@@ -14,6 +14,8 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 
+#include "globalui.h"
+
 //运动平台
 class QMovementPlatformWidget : public QWidget
 {
@@ -45,37 +47,44 @@ public:
     QInfraredCameraControlWidget();
     void init();
 protected:
-    QPointer<QLabel>    m_labelPseudocolor;             //伪彩颜色
-    QPointer<QComboBox> m_comboBoxPseudocolor;
+    QPointer<QLabel>        m_labelPseudocolor;             //伪彩颜色
+    QPointer<QComboBox>     m_comboBoxPseudocolor;
 
-    QPointer<QGroupBox> m_groupBoxDelTemperatureZone;   //删除温区
-    QPointer<QSpinBox> m_spinBoxDelTemperatureZone;        //spinBox 温区
-    QPointer<QPushButton> m_pushbtnDelZone;             //删除
-    QPointer<QPushButton> m_pushbtnDelAllZone;          //删除所有温区
+    QPointer<QGroupBox>     m_groupBoxLens;                 //镜头
+    QPointer<QLabel>        m_labelFocus;                   //聚焦
+    QPointer<QPushButton>   m_pushbtnFocusIn;               //+
+    QPointer<QPushButton>   m_pushbtnFocusOut;              //-
+    QPointer<QPushButton>   m_pushbtnAutoFocus;             //自动聚焦
 
-    QPointer<QGroupBox> m_groupBoxSetTemperatureZone;   //设置温区
-    QPointer<QLabel> m_labelX;
-    QPointer<QLabel> m_labelY;
-    QPointer<QLabel> m_labelW;
-    QPointer<QLabel> m_labelH;
-    QPointer<QSpinBox> m_spinBoxX;
-    QPointer<QSpinBox> m_spinBoxY;
-    QPointer<QSpinBox> m_spinBoxW;
-    QPointer<QSpinBox> m_spinBoxH;
-    QPointer<QPushButton> m_pushbtnSetting;             //设置
 
-    QPointer<QGroupBox> m_groupBoxReadTemperatureZone;   //读取温区
-    QPointer<QLabel> m_labelReadTemperatureZone;            //温区
-    QPointer<QSpinBox> m_spinBoxReadTemperatureZone;
-    QPointer<QPushButton> m_pushbtnRead;
-    QPointer<QLabel> m_labelMaxTemperature;                 //最高温
-    QPointer<QLabel> m_labelMinTemperature;                 //最低温
-    QPointer<QLabel> m_labelAverageTemperature;             //平均温
-    QPointer<QLabel> m_labelCenterTemperature;              //中心温
-    QPointer<QLabel> m_labelMaxTemperatureValue;
-    QPointer<QLabel> m_labelMinTemperatureValue;
-    QPointer<QLabel> m_labelAverageTemperatureValue;
-    QPointer<QLabel> m_labelCenterTemperatureValue;
+    QPointer<QGroupBox>     m_groupBoxDelTemperatureZone;   //删除温区
+    QPointer<QSpinBox>      m_spinBoxDelTemperatureZone;    //spinBox 温区
+    QPointer<QPushButton>   m_pushbtnDelZone;               //删除
+    QPointer<QPushButton>   m_pushbtnDelAllZone;            //删除所有温区
+
+    QPointer<QGroupBox>     m_groupBoxSetTemperatureZone;   //设置温区
+    QPointer<QLabel>        m_labelX;
+    QPointer<QLabel>        m_labelY;
+    QPointer<QLabel>        m_labelW;
+    QPointer<QLabel>        m_labelH;
+    QPointer<QSpinBox>      m_spinBoxX;
+    QPointer<QSpinBox>      m_spinBoxY;
+    QPointer<QSpinBox>      m_spinBoxW;
+    QPointer<QSpinBox>      m_spinBoxH;
+    QPointer<QPushButton>   m_pushbtnSetting;               //设置
+
+    QPointer<QGroupBox>     m_groupBoxReadTemperatureZone;   //读取温区
+    QPointer<QLabel>        m_labelReadTemperatureZone;      //温区
+    QPointer<QSpinBox>      m_spinBoxReadTemperatureZone;
+    QPointer<QPushButton>   m_pushbtnRead;
+    QPointer<QLabel>        m_labelMaxTemperature;           //最高温
+    QPointer<QLabel>        m_labelMinTemperature;           //最低温
+    QPointer<QLabel>        m_labelAverageTemperature;       //平均温
+    QPointer<QLabel>        m_labelCenterTemperature;        //中心温
+    QPointer<QLabel>        m_labelMaxTemperatureValue;
+    QPointer<QLabel>        m_labelMinTemperatureValue;
+    QPointer<QLabel>        m_labelAverageTemperatureValue;
+    QPointer<QLabel>        m_labelCenterTemperatureValue;
 
 };
 
@@ -105,10 +114,12 @@ class QPlayImageWidget : public QWidget
 public:
     QPlayImageWidget();
     void init();
+
+    QPointer<QDoubleClickebleLabel>  labelImage();
 protected:
-    QPointer<QLabel> m_labelImage;          //播放图像label
-    QPointer<QPushButton> m_pushbtnPlay;    //播放按钮
-    QPointer<QPushButton> m_pushbtnSave;   //保存图像
+    QPointer<QDoubleClickebleLabel> m_labelImage;              //播放图像label
+    QPointer<QPushButton> m_pushbtnPlay;        //播放按钮
+    QPointer<QPushButton> m_pushbtnCutSave;     //截图保存图像
 };
 
 //设备调试界面
@@ -127,6 +138,8 @@ public:
 public slots:
     //槽函数
     void slot_something();
+    void slot_infraredLabelDoubleClicked();                                 //红外图像被点击
+    void slot_visibleLabelDoubleClicked();                                  //可见光图被点击
 
 protected:
     QPointer<QGroupBox> m_groupBoxInfraredImage;                            //红外图像
